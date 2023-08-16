@@ -1,7 +1,9 @@
 package com.workintech.library.enums;
 
 public enum Availability {
-    AVAILABLE,
+        AVAILABLE,
     BORROWED,
-    LOST;
+    LOST,
+    DELETED;
+
 }

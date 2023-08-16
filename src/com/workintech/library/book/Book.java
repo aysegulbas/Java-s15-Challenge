@@ -62,6 +62,10 @@ public String getWriter(){
         return availability;
     }
 
+    public void setId(int id) {
+        Id = id;
+    }
+
     public void setAvailability(Availability availability) {
         this.availability = availability;
     }

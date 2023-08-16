@@ -1,6 +1,5 @@
 package com.workintech.library.main;
 
-import com.workintech.library.book.AvailableBook;
 import com.workintech.library.book.Book;
 import com.workintech.library.book.Library;
 import com.workintech.library.enums.Availability;
@@ -10,28 +9,26 @@ import com.workintech.library.enums.Type;
 import com.workintech.library.member.Member;
 import com.workintech.library.member.Subscription;
 
-import java.util.LinkedList;
-
 public class Main {
     public static void main(String[] args) {
         Book book1=new Book(1,"Madam Bovery","Gustave Flaubert","Flaubert’s debut novel is a pioneering work of literary realism which faced obscenity " +
                 "charges when it was originally published but is now considered a masterpiece.", Type.CLASSICS,10,300,Availability.AVAILABLE);
 
-       Book book2=new AvailableBook(2,"Madam Bovery","Gustave Flaubert","Flaubert’s debut novel is a pioneering work of literary realism which faced " +
+       Book book2=new Book(2,"Madam Bovery","Gustave Flaubert","Flaubert’s debut novel is a pioneering work of literary realism which faced " +
                "obscenity charges when it was originally published but is now considered a masterpiece.",Type.CLASSICS,8,300,Availability.AVAILABLE);
-        Book book3=new AvailableBook(3,"Madam Bovery","Gustave Flaubert","Flaubert’s debut novel is a pioneering work of literary realism which faced " +
+        Book book3=new Book(3,"Madam Bovery","Gustave Flaubert","Flaubert’s debut novel is a pioneering work of literary realism which faced " +
                 "obscenity charges when it was originally published but is now considered a masterpiece.",Type.CLASSICS,8,300,Availability.AVAILABLE);
-        Book book4=new AvailableBook(4,"Madam Bovery","Gustave Flaubert","Flaubert’s debut novel is a pioneering work of literary realism which faced " +
+        Book book4=new Book(4,"Madam Bovery","Gustave Flaubert","Flaubert’s debut novel is a pioneering work of literary realism which faced " +
                 "obscenity charges when it was originally published but is now considered a masterpiece.",Type.CLASSICS,8,300,Availability.AVAILABLE);
-        Book book5=new AvailableBook(5,"Madam Bovery","Gustave Flaubert","Flaubert’s debut novel is a pioneering work of literary realism which faced " +
+        Book book5=new Book(5,"Madam Bovery","Gustave Flaubert","Flaubert’s debut novel is a pioneering work of literary realism which faced " +
                 "obscenity charges when it was originally published but is now considered a masterpiece.",Type.CLASSICS,8,300,Availability.AVAILABLE);
-        Book book6=new AvailableBook(6,"Madam Bovery","Gustave Flaubert","Flaubert’s debut novel is a pioneering work of literary realism which faced " +
+        Book book6=new Book(6,"Madam Bovery","Gustave Flaubert","Flaubert’s debut novel is a pioneering work of literary realism which faced " +
                 "obscenity charges when it was originally published but is now considered a masterpiece.",Type.CLASSICS,8,1500,Availability.AVAILABLE);
-        Book book7=new AvailableBook(7,"Madam Bovery","Gustave Flaubert","Flaubert’s debut novel is a pioneering work of literary realism which faced " +
+        Book book7=new Book(7,"Madam Bovery","Gustave Flaubert","Flaubert’s debut novel is a pioneering work of literary realism which faced " +
                 "obscenity charges when it was originally published but is now considered a masterpiece.",Type.CLASSICS,8,300,Availability.AVAILABLE);
-        Book book8=new AvailableBook(8,"Madam Bovery","Gustave Flaubert","Flaubert’s debut novel is a pioneering work of literary realism which faced " +
+        Book book8=new Book(8,"Madam Bovery","Gustave Flaubert","Flaubert’s debut novel is a pioneering work of literary realism which faced " +
                 "obscenity charges when it was originally published but is now considered a masterpiece.",Type.CLASSICS,8,500,Availability.AVAILABLE);
-        Book book9=new AvailableBook(9,"Madam Bovery","Gustave Flaubert","Flaubert’s debut novel is a pioneering work of literary realism which faced " +
+        Book book9=new Book(9,"Madam Bovery","Gustave Flaubert","Flaubert’s debut novel is a pioneering work of literary realism which faced " +
                 "obscenity charges when it was originally published but is now considered a masterpiece.",Type.CLASSICS,8,500,Availability.LOST);
         Member member1=new Member(1,"Aysegul","Bas", Status.LIVE,5000);
 
@@ -107,6 +104,23 @@ public class Main {
         System.out.println(member1);
         System.out.println(database.getLostBooks());
         System.out.println(database.getByName("Madam Bovery"));
+        System.out.println("-------------------");
+        System.out.println(database.getBookById(2));
+
+
+        System.out.println("-------------------");
+//        System.out.println(database.getBookById(7));
+        System.out.println(database.getAllBooks());
+        System.out.println("-------------------");
+
+        System.out.println( database.removeBookById(5));
+        System.out.println(book5);
+        database.addNewBook(book9);
+        System.out.println(database.getAllBooks());
+        System.out.println( database.removeBookById(9));
+        System.out.println(book9);
+        memberList.borrowBook(1,book1);
+
 
 
 

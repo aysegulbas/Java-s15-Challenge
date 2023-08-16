@@ -14,17 +14,20 @@ public class Library {
     public void addNewBook(Book book) {
         if (!database.contains(book)) {
             database.add(book);
-        }else{
+        } else {
             System.out.println("This id has been already entried. ");
         }
 
     }
+
     public Map<Integer, Book> getAllBooks() {
         Map<Integer, Book> allBookMap = new HashMap<>();
         Iterator iterator = database.iterator();
         while (iterator.hasNext()) {
             Book book = (Book) iterator.next();
-            allBookMap.put(book.getId(), book);
+            if (!book.getAvailability().name().equals(Availability.DELETED.name())) {
+                allBookMap.put(book.getId(), book);
+            }
         }
         return allBookMap;
     }
@@ -55,6 +58,7 @@ public class Library {
         return borrowedBookMap;
 
     }
+
     public Map<Integer, Book> getLostBooks() {
         Map<Integer, Book> lostBookMap = new HashMap<>();
         Iterator iterator = database.iterator();
@@ -67,42 +71,69 @@ public class Library {
         }
         return lostBookMap;
     }
-    public Map<Integer,Book> getByWriter(String writer){
-        Map<Integer,Book> availableBooks=getAvailableBooks();
-        Map<Integer,Book> filteredWriters=new HashMap<>();
-        Iterator iterator=availableBooks.values().iterator();
-        while (iterator.hasNext()){
-            Book book=(Book) iterator.next();
-            if(book.getWriter().equals(writer)){
-                filteredWriters.put(book.getId(),book);
+    public Map<Integer, Book> getDeletedBooks() {
+        Map<Integer, Book> deletedBookMap = new HashMap<>();
+        Iterator iterator = database.iterator();
+        while (iterator.hasNext()) {
+            Book book = (Book) iterator.next();
+            if (book.getAvailability().name().equals(Availability.DELETED.name())) {
+                deletedBookMap.put(book.getId(), book);
             }
-        }return filteredWriters;
+
+        }
+        return deletedBookMap;
     }
 
-    public Map<Integer,Book> getByName(String name){
-        Map<Integer,Book> availableBooks=getAvailableBooks();
-        Map<Integer,Book> filteredNames=new HashMap<>();
-        Iterator iterator=availableBooks.values().iterator();
-        while (iterator.hasNext()){
-            Book book=(Book) iterator.next();
-            if(book.getName().equals(name)){
-                filteredNames.put(book.getId(),book);
+    public Map<Integer, Book> getByWriter(String writer) {
+        Map<Integer, Book> availableBooks = getAvailableBooks();
+        Map<Integer, Book> filteredWriters = new HashMap<>();
+        Iterator iterator = availableBooks.values().iterator();
+        while (iterator.hasNext()) {
+            Book book = (Book) iterator.next();
+            if (book.getWriter().equals(writer)) {
+                filteredWriters.put(book.getId(), book);
             }
-        }return filteredNames;
-    }
-    public Map<Integer,Book> getByBorrowedId(int Id){
-        Map<Integer,Book> borrowedId=getBorrowedBooks();
-        Map<Integer,Book> filteredId=new HashMap<>();
-        Iterator iterator=borrowedId.values().iterator();
-        while (iterator.hasNext()){
-            Book book=(Book) iterator.next();
-            if(book.getId()==Id){
-                borrowedId.put(book.getId(),book);
-            }
-        }return filteredId;
+        }
+        return filteredWriters;
     }
 
+    public Map<Integer, Book> getByName(String name) {
+        Map<Integer, Book> availableBooks = getAvailableBooks();
+        Map<Integer, Book> filteredNames = new HashMap<>();
+        Iterator iterator = availableBooks.values().iterator();
+        while (iterator.hasNext()) {
+            Book book = (Book) iterator.next();
+            if (book.getName().equals(name)) {
+                filteredNames.put(book.getId(), book);
+            }
+        }
+        return filteredNames;
+    }
 
+    public Map<Integer, Book> getBookById(int Id) {
+        Map<Integer, Book> filteredId = new HashMap<>();
+        Iterator iterator = database.iterator();
+        while (iterator.hasNext()) {
+            Book book = (Book) iterator.next();
+            if(book.getId()==(Id)){filteredId.put(book.getId(), book);}
+        }
+        return filteredId;
+    }
+
+    public Map<Integer, Book> removeBookById(int Id) {
+        Map<Integer, Book> allBookMap = new HashMap<>();
+        Iterator iterator = database.iterator();
+        while (iterator.hasNext()) {
+            Book book = (Book) iterator.next();
+            if (!book.getAvailability().name().equals(Availability.DELETED.name())&&book.getId()==(Id)){
+               iterator.remove();
+               book.setAvailability(Availability.DELETED);
+               book.setDepository(0);
+            }
+        }
+
+        return allBookMap;
+    }
 
 
 }

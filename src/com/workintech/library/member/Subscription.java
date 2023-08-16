@@ -7,7 +7,7 @@ import com.workintech.library.enums.Status;
 
 import java.util.*;
 
-public class Subscription {
+public class Subscription implements Borrowable {
     private LinkedList memberList;
     private Book book;
 
@@ -26,26 +26,70 @@ public class Subscription {
         Iterator iterator = memberList.iterator();
         while (iterator.hasNext()) {
             Member member = (Member) iterator.next();
+            if(!member.getStatus().name().equals(Status.CLOSED.name())){
             allMemberMap.put(member.getMemberId(), member);
+        }
         }
         return allMemberMap;
     }
-public boolean checkMemberStatus(int memberId){
-    Member member = getAllMembers().get(memberId);
-    return member.getStatus().name().equals(Status.LIVE.name());
-
-}
-    public boolean checkBookAvailability(Book book){
-        return book.getAvailability().name().equals(Availability.AVAILABLE.name());
+    public Map<Integer, Member> getMemberById(int Id) {
+        Map<Integer, Member> filteredId = new HashMap<>();
+        Iterator iterator = memberList.iterator();
+        while (iterator.hasNext()) {
+            Member member = (Member) iterator.next();
+            if(member.getMemberId()==(Id)){filteredId.put(member.getMemberId(), member);}
+        }
+        return filteredId;
+    }
+    public Map<Integer, Member> removeMemberById(int Id) {
+        Map<Integer, Member> allMemberMap = new HashMap<>();
+        Iterator iterator = memberList.iterator();
+        while (iterator.hasNext()) {
+            Member member = (Member) iterator.next();
+            if (!member.getStatus().name().equals(Status.CLOSED.name())&&member.getMemberId()==(Id)){
+                iterator.remove();
+                member.setStatus(Status.CLOSED);
+            }
+        }
+        return allMemberMap;
     }
 
-public boolean checkDepository(int memberId,Book book){
-    Member member = getAllMembers().get(memberId);
+    @Override
+    public boolean checkMemberStatus(int memberId) {
+        Member member = getAllMembers().get(memberId);
+    return member.getStatus().name().equals(Status.LIVE.name());
+
+    }
+
+    @Override
+    public boolean checkBookAvailability(Book book) {
+        return book.getAvailability().name().equals(Availability.AVAILABLE.name());
+
+    }
+
+    @Override
+    public boolean checkDepository(int memberId,Book book) {
+        Member member = getAllMembers().get(memberId);
     return member.getMemberFee()>= book.getDepository();
-}
+
+    }
+    //public boolean checkMemberStatus(int memberId){
+//    Member member = getAllMembers().get(memberId);
+//    return member.getStatus().name().equals(Status.LIVE.name());
+//
+//}
+//    public boolean checkBookAvailability(Book book){
+//        return book.getAvailability().name().equals(Availability.AVAILABLE.name());
+//    }
+//
+//public boolean checkDepository(int memberId,Book book){
+//    Member member = getAllMembers().get(memberId);
+//    return member.getMemberFee()>= book.getDepository();
+//}
 
     public void borrowBook(int memberId, Book book) {
         Member member = getAllMembers().get(memberId);
+
 //        while (iterator.hasNext()) {
 //            Member member = (Member) iterator.next();
         try {
@@ -102,6 +146,5 @@ public boolean checkDepository(int memberId,Book book){
             }
 
         }
-//        }
     }
 }
